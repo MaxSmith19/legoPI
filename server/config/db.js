@@ -12,6 +12,7 @@ const connectDB = async () => {
       // Listen for errors on the MongoDB connection
       mongoose.connection.on("error", (error) => {
         // if an error does occur, then format the error message and sent it to "MongoLogs.log"
+        console.log(`MongoDB Error: ${error.message}`);
         const errorMessage = `${new Date().toISOString()} - MongoDB Error: ${error.message}\n`;
         fs.appendFile(logFilePath, errorMessage, (err) => {
           if (err) {
@@ -21,6 +22,7 @@ const connectDB = async () => {
 
     });
     } catch (error) {
+      console.log(error)
       process.exit(1);
     }
   };

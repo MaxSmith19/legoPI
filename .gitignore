@@ -16,3 +16,4 @@ yarn-error.log
 
 # Misc files
 ToBeAdded.txt
+server/logs/MongoErrors.log
