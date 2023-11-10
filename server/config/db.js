@@ -6,7 +6,7 @@ const logFilePath = path.join(logsDirectory, "MongoErrors.log");
 
 const connectDB = async () => {
     try {
-      const connect = await mongoose.connect("mongodb+srv://root:root@cluster0.okmozue.mongodb.net/?retryWrites=true&w=majority");
+      const connect = await mongoose.connect(process.env.MONGO_URI);
       console.log(`CONNECTED TO MONGO @ ${connect.connection.host}`);
   
       // Listen for errors on the MongoDB connection

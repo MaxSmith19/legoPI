@@ -10,6 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded(false));
 
+app.use("/User", require("./routes/userRoute.js"));
+
 let server = http.createServer(app);
 server.listen(port, () => console.log(`Server started on port ${port}`));
 
