@@ -1,5 +1,6 @@
 import os
 import requests
+import json
 from bs4 import BeautifulSoup
 
 #consider proxies to call LEGO, got locked out for a while due to too many requests.
@@ -8,7 +9,7 @@ from bs4 import BeautifulSoup
 #@param setCode - the code of the lego set
 #@returns data - a dictionary containing the meta data of the lego set
 def getLegoData(setCode):
-    #todo - Also add the buying data inc. discount, vendor etc.
+    #todo - Also add the buying data inc. discount, vendor etc - Requires selenium web driver
     bricksetURL= "https://brickset.com/sets/" + setCode
     response = requests.get(bricksetURL)
 
