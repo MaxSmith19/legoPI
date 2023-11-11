@@ -10,6 +10,10 @@ app = Flask(__name__)
 def getLegoLastChance():
     return legoLastChance()
 
+@app.route('/test')
+def testAPI():
+    return "Currently running"
+
 @app.route('/<setCode>')
 def getLegoSet(setCode):
     return getLegoData(setCode)

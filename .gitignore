@@ -16,4 +16,5 @@ yarn-error.log
 
 # Misc files
 ToBeAdded.txt
-server/logs/MongoErrors.log
+server/logs/
+web/__pycache__/

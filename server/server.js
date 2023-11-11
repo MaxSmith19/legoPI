@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded(false));
 
 app.use("/User", require("./routes/userRoute.js"));
+app.use("/Python", require("./routes/callPythonRoute.js"));
 
 let server = http.createServer(app);
 server.listen(port, () => console.log(`Server started on port ${port}`));
