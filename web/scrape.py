@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 #consider proxies to call LEGO, got locked out for a while due to too many requests.
 
+#todo - pandas?
 def checkSetPrice(setCode):
     driver = webdriver.Firefox()
     driver.get("https://www.bricklink.com/v2/catalog/catalogitem.page?S=" + setCode + "#T=P")
@@ -86,5 +87,3 @@ def checkUsersSets():
 
 def rewardDeals():
     pass
-
-checkSetPrice("75292")
