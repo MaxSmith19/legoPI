@@ -38,6 +38,7 @@ def checkSetPrice(setCode):
 #@returns data - a dictionary containing the meta data of the lego set
 def getLegoData(setCode):
     #todo - Also add the buying data inc. discount, vendor etc - Requires selenium web driver
+    
     bricksetURL= "https://brickset.com/sets/" + setCode
     response = requests.get(bricksetURL)
 
@@ -53,7 +54,12 @@ def getLegoData(setCode):
     for i in range(len(metaTitles)):
         data.update({metaTitles[i].get_text(): metaValues[i].get_text()})
 
+    driver = webdriver.Firefox()
+    driver.get("https://brickset.com/sets/" + setCode)
+    driver.implicitly_wait(10)
 
+    price=driver.find_elements(By.CLASS_NAME, "price")
+    data.update({"Price": price[0].text})
     return data
 
 #Scrapes the LEGO website (Last chance page) for their sets due to retire.
@@ -87,3 +93,5 @@ def checkUsersSets():
 
 def rewardDeals():
     pass
+
+getLegoData("10278-1")
