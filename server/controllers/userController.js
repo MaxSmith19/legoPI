@@ -1,3 +1,4 @@
+const { generateToken } = require('../middleware/JWTAuthMiddleware');
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
@@ -12,7 +13,7 @@ const loginUser = async (req, res) => {
     try{
         const user = await User.findOne({email: req.body.email});
         if(bcrypt.compare(req.body.password, user.password)){
-            res.status(200).json(user);
+            res.status(200).json({token: generateToken(user._id)});
         }else{
             res.status(404).json({ message: 'User not found' });
         }
