@@ -26,6 +26,14 @@ const protect = async (req, res, next) => {
     } 
 }
 
+const decodeJWT = (req, res) => {
+    let token = req.headers.authorization.split(" ")[1]
+    if(token===null){
+       token= req.cookies.token
+    }
+    return jwt.verify(token, process.env.JWT_SECRET);
+}
+
 const generateToken = (id) => {
     const token = jwt.sign({id}, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES,
@@ -33,4 +41,4 @@ const generateToken = (id) => {
     return token;
 }
 
-module.exports = { protect, generateToken }
+module.exports = { protect, generateToken, decodeJWT }
