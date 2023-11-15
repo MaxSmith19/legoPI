@@ -1,4 +1,8 @@
+const { generateToken } = require('../middleware/JWTAuthMiddleware');
 const User = require('../models/userModel');
+const bcrypt = require('bcrypt');
+
+const saltrounds = 10;
 
 
 // GET a single user by email and password 
@@ -7,9 +11,9 @@ const User = require('../models/userModel');
 // @returns (tbd) a JWT or a session token.
 const loginUser = async (req, res) => {
     try{
-        const user = await User.find(req.body.email && req.body.password);
-        if(user){
-            res.status(200).json(user);
+        const user = await User.findOne({email: req.body.email});
+        if(bcrypt.compare(req.body.password, user.password)){
+            res.status(200).json({token: generateToken(user._id)});
         }else{
             res.status(404).json({ message: 'User not found' });
         }
@@ -41,10 +45,10 @@ const getUserById = async (req, res) => {
 // TODO - research whether confirmation passowrd is frontend or backend
 const createUser = async (req, res) => {
     const user = new User({
-        name: req.body.name,
+        username: req.body.username,
         email: req.body.email,
-        password: req.body.password
-    });
+        password: await bcrypt.hash(req.body.password, saltrounds)
+    }); 
 
     try {
         const newUser = await user.save();

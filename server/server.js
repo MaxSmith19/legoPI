@@ -10,10 +10,11 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded(false));
+app.use(express.urlencoded(true));
 
 app.use("/User", require("./routes/userRoute.js"));
 app.use("/Python", require("./routes/callPythonRoute.js"));
+app.use("/Storage", require("./routes/storageRoute.js"));
 
 let server = http.createServer(app);
 server.listen(port, () => console.log(`Server started on port ${port}`));
