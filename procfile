@@ -1,0 +1,2 @@
+buildpacks:set heroku/python
+web: python /web/restful.py
