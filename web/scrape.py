@@ -2,14 +2,43 @@ import os
 import requests
 import json
 from bs4 import BeautifulSoup
-
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 #consider proxies to call LEGO, got locked out for a while due to too many requests.
+
+#todo - pandas?
+def checkSetPrice(setCode):
+    driver = webdriver.Firefox()
+    driver.get("https://www.bricklink.com/v2/catalog/catalogitem.page?S=" + setCode + "#T=P")
+    driver.implicitly_wait(10)
+    listOfData= []
+    
+    #Find the cookies button and click it
+    elem=driver.find_element(By.ID,"js-btn-save")
+    elem.find_elements(By.TAG_NAME,"button")[1].click()
+
+    #Exclude incomplete
+    driver.find_element(By.ID,"_idchkPGExcludeIncomplete").click()
+
+    #Find the table of prices
+    pricingTable=driver.find_elements(By.CLASS_NAME,"pcipgOddColumn")[1] #~Technically the third table 
+    pricingElems=pricingTable.find_element(By.TAG_NAME,"table").find_elements(By.TAG_NAME,"tr")
+    for price in pricingElems:
+        try:
+            price.find_elements(By.TAG_NAME,"td")[2]
+            listOfData.append(price.find_elements(By.TAG_NAME,"td")[2].text)
+        except:
+            pass #Ignore the header row, as does not contain the 3rd td element
+    driver.quit()
+    return listOfData
 
 # Given a set code, return the meta data surrounding the lego set.
 #@param setCode - the code of the lego set
 #@returns data - a dictionary containing the meta data of the lego set
 def getLegoData(setCode):
     #todo - Also add the buying data inc. discount, vendor etc - Requires selenium web driver
+    
     bricksetURL= "https://brickset.com/sets/" + setCode
     response = requests.get(bricksetURL)
 
@@ -25,7 +54,12 @@ def getLegoData(setCode):
     for i in range(len(metaTitles)):
         data.update({metaTitles[i].get_text(): metaValues[i].get_text()})
 
+    driver = webdriver.Firefox()
+    driver.get("https://brickset.com/sets/" + setCode)
+    driver.implicitly_wait(10)
 
+    price=driver.find_elements(By.CLASS_NAME, "price")
+    data.update({"Price": price[0].text})
     return data
 
 #Scrapes the LEGO website (Last chance page) for their sets due to retire.
@@ -60,3 +94,4 @@ def checkUsersSets():
 def rewardDeals():
     pass
 
+getLegoData("10278-1")
