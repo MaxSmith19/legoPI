@@ -15,7 +15,7 @@ app.use(express.urlencoded(true));
 app.use("/User", require("./routes/userRoute.js"));
 app.use("/Python", require("./routes/callPythonRoute.js"));
 app.use("/Storage", require("./routes/storageRoute.js"));
-app.use("/", (req, res) => res.send('API is running'));
+app.use("/", (req, res) => res.status(200).json(true));
 let server = http.createServer(app);
 server.listen(port, () => console.log(`Server started on port ${port}`));
 
