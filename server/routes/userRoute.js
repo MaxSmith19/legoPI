@@ -3,7 +3,7 @@ const router = express.Router();
 const { loginUser, getUserById, createUser, updateUserById, deleteUserById } = require('../controllers/userController');
 const { protect } = require('../middleware/JWTAuthMiddleware');
 
-router.get('/login', loginUser);
+router.post('/login', loginUser);
 
 // GET user by ID
 router.get('/:id', getUserById);
