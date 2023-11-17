@@ -21,6 +21,28 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+// POST a new user
+// @Params req(uest), res(ponse)
+// @Desc Req ideally contains the name, email and password,  of the user. 
+// @Returns the user object in JSON.
+const createUser = async (req, res) => {
+    try {
+        if(!User.findOne({"email": req.body.email})){
+            const user = new User({
+                username: req.body.username,
+                email: req.body.email,
+                password: await bcrypt.hash(req.body.password, saltrounds)
+            }); 
+        const newUser = await user.save();
+
+        }else{
+            res.status(409).json({ message: 'User already exists' });
+        }
+        res.status(201).json(newUser);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
 
 // GET a single user by ID
 //@Params req(uest), res(ponse) 
@@ -38,25 +60,7 @@ const getUserById = async (req, res) => {
     }
 };
 
-// POST a new user
-// @Params req(uest), res(ponse)
-// @Desc Req ideally contains the name, email and password,  of the user. 
-// @Returns the user object in JSON.
-// TODO - research whether confirmation passowrd is frontend or backend
-const createUser = async (req, res) => {
-    const user = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: await bcrypt.hash(req.body.password, saltrounds)
-    }); 
 
-    try {
-        const newUser = await user.save();
-        res.status(201).json(newUser);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-};
 
 // PUT a user by ID
 // @Params req(uest), res(ponse)

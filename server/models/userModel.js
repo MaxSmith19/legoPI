@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true
-    }, //May or may not be needed, depends on usage - pvt or pub
     email: {
         type: String,
         required: true,
