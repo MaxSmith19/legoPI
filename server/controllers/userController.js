@@ -33,12 +33,12 @@ const createUser = async (req, res) => {
                 email: req.body.email,
                 password: await bcrypt.hash(req.body.password, saltrounds)
             }); 
-        const newUser = await user.save();
+            const newUser = await user.save();
+            res.status(201).json(newUser);
 
         }else{
             res.status(409).json({ message: 'User already exists' });
         }
-        res.status(201).json(newUser);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
