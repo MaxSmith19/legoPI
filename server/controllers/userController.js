@@ -11,9 +11,15 @@ const saltrounds = 10;
 // @returns (tbd) a JWT or a session token.
 const loginUser = async (req, res) => {
     try{
+        console.log(req.body)
         const user = await User.findOne({email: req.body.email});
-        if(bcrypt.compare(req.body.password, user.password)){
-            return res.status(200).json({token: generateToken(user._id)});
+        if(user && req.body.password){
+            const match = await bcrypt.compare(req.body.password, user.password);
+            if(!match){
+                return res.status(401).json({ message: 'Incorrect password' });
+            }else{
+                return res.status(200).json({token: generateToken(user._id)});
+            }
         }else{
             return res.status(404).json({ message: 'User not found' });
         }
