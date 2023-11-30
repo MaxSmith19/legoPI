@@ -37,8 +37,8 @@ def checkSetPrice(setCode):
 #@param setCode - the code of the lego set
 #@returns data - a dictionary containing the meta data of the lego set
 def getLegoData(setCode):
+    print("Running")
     #todo - Also add the buying data inc. discount, vendor etc - Requires selenium web driver
-    print(setCode)
     bricksetURL= "https://brickset.com/sets/" + setCode
     response = requests.get(bricksetURL)
 
@@ -61,7 +61,7 @@ def getLegoData(setCode):
         price=driver.find_elements(By.CLASS_NAME, "price")
         data.update({"Price": price[0].text})
     except(IndexError):
-        pass #No price found - may not be sold or an incredibly old set.
+        data.update({"Price": "Not Available"})
     finally:
         driver.quit()
     return data
