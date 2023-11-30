@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 
 #todo - pandas?
 def checkSetPrice(setCode):
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get("https://www.bricklink.com/v2/catalog/catalogitem.page?S=" + setCode + "#T=P")
     driver.implicitly_wait(10)
     listOfData= []
@@ -38,7 +38,7 @@ def checkSetPrice(setCode):
 #@returns data - a dictionary containing the meta data of the lego set
 def getLegoData(setCode):
     #todo - Also add the buying data inc. discount, vendor etc - Requires selenium web driver
-    
+    print(setCode)
     bricksetURL= "https://brickset.com/sets/" + setCode
     response = requests.get(bricksetURL)
 
@@ -54,12 +54,16 @@ def getLegoData(setCode):
     for i in range(len(metaTitles)):
         data.update({metaTitles[i].get_text(): metaValues[i].get_text()})
 
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get("https://brickset.com/sets/" + setCode)
-    driver.implicitly_wait(10)
-
-    price=driver.find_elements(By.CLASS_NAME, "price")
-    data.update({"Price": price[0].text})
+    driver.implicitly_wait(5) # test this - could be quicker.
+    try:
+        price=driver.find_elements(By.CLASS_NAME, "price")
+        data.update({"Price": price[0].text})
+    except(IndexError):
+        pass #No price found - may not be sold or an incredibly old set.
+    finally:
+        driver.quit()
     return data
 
 #Scrapes the LEGO website (Last chance page) for their sets due to retire.
@@ -93,5 +97,3 @@ def checkUsersSets():
 
 def rewardDeals():
     pass
-
-getLegoData("10278-1")
