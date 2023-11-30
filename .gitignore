@@ -18,3 +18,5 @@ yarn-error.log
 ToBeAdded.txt
 server/logs/
 web/__pycache__/
+web/scrape.py
+web/__pycache__/scrape.cpython-311.pyc
