@@ -33,6 +33,7 @@ const loginUser = async (req, res) => {
 // @Desc Req ideally contains the name, email and password,  of the user. 
 // @Returns the user object in JSON.
 const createUser = async (req, res) => {
+    console.log(req.body)
     try {
         const email=req.body.email;
         const exists= await User.findOne({"email":email})
@@ -44,7 +45,7 @@ const createUser = async (req, res) => {
             username: req.body.username,
             password: await bcrypt.hash(req.body.password, saltrounds)
         }); 
-        return res.status(400).json({ message: 'User created'});
+        return res.status(200).json({ message: 'User created'});
         
     } catch (err) {
         console.log(err.message)
