@@ -1,3 +1,3 @@
-web: python scrape/restful.py
+web: gunicorn scrape/restful.py
 backendServer: npm start
 # update
