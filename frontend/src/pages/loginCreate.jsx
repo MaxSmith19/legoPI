@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import * as qs from 'qs'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
@@ -28,7 +30,10 @@ const Login = (props) => {
 
     axios.request(config)
     .then((response) => {
-    console.log(JSON.stringify(response.data));
+      const userToken = response.data.token
+      document.cookie = "token=" + userToken +"; SameSite=None; Secure";
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + userToken
+      props.setLoggedIn(true)
     })
     .catch((error) => {
     console.log(error);
