@@ -1,3 +1,1 @@
-buildpacks:set heroku/python
-PythonServer: python /web/restful.py
-JsServer: nodemon /server/server.js
+web: python web/restful.py

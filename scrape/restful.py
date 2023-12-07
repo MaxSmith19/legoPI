@@ -5,7 +5,7 @@ from scrape import legoLastChance, getLegoData, checkSetPrice
 
 #TBD if this is run on spare RPI or if the JS is. Both could, but may be unecessary.
 app = Flask(__name__)
-
+#Todo - run on rpi, not a priority
 @app.route('/')
 def getLegoLastChance():
     return legoLastChance()
