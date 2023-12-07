@@ -5,7 +5,11 @@ __pycache__/
 *.pyd
 *.pyc
 
-.venv/
+#JS Venv
+.venv/ 
+
+#Python Venv
+venv/
 
 # Node.js
 node_modules/
