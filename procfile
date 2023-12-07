@@ -1,1 +1,2 @@
-web: python web/restful.py
+web: python scrape/restful.py
+backendServer: npm start
