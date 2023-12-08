@@ -11,6 +11,7 @@ const Login = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const [activeTab, setActiveTab] = useState("login");
+  const navigate = useNavigate();
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ const Login = (props) => {
       const userToken = response.data.token
       document.cookie = "token=" + userToken +"; SameSite=None; Secure";
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + userToken
-      props.setLoggedIn(true)
+      navigate("/Dashboard")
     })
     .catch((error) => {
     console.log(error);
