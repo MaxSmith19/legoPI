@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/server.js",
-    "python": "python web/restful.py",
+    "python": "python scrape/restful.py",
     "frontend": "cd frontend && npm start"
   },
   "author": "",
@@ -25,6 +25,7 @@
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
     "path": "^0.12.7",
-    "processenv": "^3.0.9"
+    "processenv": "^3.0.9",
+    "react-icons": "^4.12.0"
   }
 }
