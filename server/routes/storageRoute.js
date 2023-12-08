@@ -4,7 +4,7 @@ const { getAllSets, getSetByID, postNewSet, updateSet, deleteSet, getSetAddition
 
 
 router.get('/', getAllSets);
-router.get('/additionalData', getSetAdditionalData);
+router.get('/additionalData/:setCode', getSetAdditionalData);
 router.post('/', postNewSet);
 router.get('/:id', getSetByID);
 router.put('/:id', updateSet);

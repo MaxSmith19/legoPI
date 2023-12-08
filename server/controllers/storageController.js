@@ -31,12 +31,10 @@ const getSetByID = async (req, res) => {
 
 
 const getSetAdditionalData = async (req, res) => {
-    const token = decodeJWT(req, res); //Get the _id from the JWT token
     try {
-        const response = await axios.get(`http://127.0.0.1:5000/${req.body.setCode}`);
+        const response = await axios.get(`http://127.0.0.1:5000/${req.params.setCode}`);
         const storage = new Storage({
             setCode: req.body.setCode,
-            userID: token.id,
             additionalData: response.data
         }); 
 
