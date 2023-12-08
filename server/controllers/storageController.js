@@ -30,29 +30,38 @@ const getSetByID = async (req, res) => {
 };
 
 
-const postNewSet = async (req, res) => {
+const getSetAdditionalData = async (req, res) => {
     const token = decodeJWT(req, res); //Get the _id from the JWT token
-    console.log(req.body)
     try {
         const response = await axios.get(`http://127.0.0.1:5000/${req.body.setCode}`);
-        console.log(response.data)
-    const storage = new Storage({
-        setCode: req.body.setCode,
-        userID: token.id,
-        additionalData: response.data
-    }); 
-    // axios call to localhost to get the set data
-        
-    
+        const storage = new Storage({
+            setCode: req.body.setCode,
+            userID: token.id,
+            additionalData: response.data
+        }); 
 
-        const newStorage = await storage.save();
-        res.status(201).json(newStorage);
+        res.status(201).json(storage);
     } catch (err) {
         console.log(err)
         res.status(400).json({ message: err.message });
     }
 };
 
+const postNewSet = async (req, res) => {
+    const token = decodeJWT(req, res); //Get the _id from the JWT token
+    try {
+        const storage = new Storage({
+            setCode: req.body.setCode,
+            userID: token.id,
+            additionalData: req.body.additionalData
+        });
+        const newStorage = await storage.save();
+        res.status(201).json(newStorage);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+
+}
 
 const updateSet = async (req, res) => {
     try {
@@ -92,5 +101,6 @@ module.exports= {
     getSetByID,
     postNewSet,
     updateSet,
-    deleteSet
+    deleteSet,
+    getSetAdditionalData
 }

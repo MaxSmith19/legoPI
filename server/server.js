@@ -12,10 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded(true));
-app.use(cors({ 
-    origin: ['http://82.20.49.101', 'http://localhost:3000', '*'], 
-    credentials: true 
-  }));
+app.use(cors());
   
 app.use("/User", require("./routes/userRoute.js"));
 app.use("/Python", require("./routes/callPythonRoute.js"));
