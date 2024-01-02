@@ -34,6 +34,7 @@ const Login = (props) => {
       const userToken = response.data.token
       document.cookie = "token=" + userToken +"; SameSite=None; Secure";
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + userToken
+      props.onLogin();
       navigate("/Dashboard")
     })
     .catch((error) => {
@@ -82,6 +83,7 @@ const Login = (props) => {
   //true if the activetab is register
 
   return (
+    <div className="w-full">
     <div className="flex justify-center align-center">
       <div className="max-w-lg mt-12 form-width form-length">
         <div className="flex justify-start">
@@ -113,6 +115,7 @@ const Login = (props) => {
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={onSubmitLogin}>Log in</button>
             </div>
           </form>
+          
         )}
 
         {registerActive && (
@@ -146,6 +149,7 @@ const Login = (props) => {
         </form>
         )}
       </div>
+    </div>
     </div>
   );
 }
