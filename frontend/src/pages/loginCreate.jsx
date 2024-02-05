@@ -34,7 +34,7 @@ const Login = (props) => {
       const userToken = response.data.token
       document.cookie = "token=" + userToken +"; SameSite=None; Secure";
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + userToken
-      props.onLogin();
+      props.onLogin(true);
       navigate("/Dashboard")
     })
     .catch((error) => {
