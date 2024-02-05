@@ -37,7 +37,6 @@ const getSetAdditionalData = async (req, res) => {
             setCode: req.body.setCode,
             additionalData: response.data
         }); 
-        console.log(storage)
         res.status(201).json(storage);
     } catch (err) {
         console.log(err)
