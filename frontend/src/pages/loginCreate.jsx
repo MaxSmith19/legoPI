@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import * as qs from 'qs'
 import Cookies from 'js-cookie'
@@ -12,7 +12,16 @@ const Login = (props) => {
 
   const [activeTab, setActiveTab] = useState("login");
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    onLoad();
+  })
 
+  const onLoad = () =>{
+    if(Cookies.get("token")!==undefined){
+      navigate("/Dashboard")
+    }
+  }
   const onSubmitLogin = (e) => {
     e.preventDefault();
     let data = qs.stringify({
