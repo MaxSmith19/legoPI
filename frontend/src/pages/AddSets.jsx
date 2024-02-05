@@ -37,8 +37,6 @@ const AddSets = () => {
         }
     };
     const confirmSet = async () => {
-        console.log(set);
-        console.log(Cookies.get('token'));
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
