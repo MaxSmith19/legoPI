@@ -8,10 +8,11 @@ import Navigation from './components/Navigation';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
+import { BarLoader } from 'react-spinners';
 
-function App() {
+function App(props) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-
+  const [isLoading, setLoading] = useState(false)
   const unpackCookie = () => {
     const authCookie = Cookies.get("token")
     if (authCookie !== undefined) {
@@ -29,23 +30,34 @@ function App() {
     setIsAuthenticated(false)
   }
 
+  const handleIsLoading = (value) => {
+    setLoading(value);
+  };
   
 
   return (
 
     <>
+    <BarLoader 
+            width={2000}
+            loading={isLoading}
+            
+          />
       <div className=" flex flex-row-2">   
-        <Router>
+
+        <Router >
           {isAuthenticated ? <Navigation onLogout={logOut} /> : null}
+            
             <Routes>
               <Route path="/" exact element={<Navigate replace to="/Login"></Navigate>} />
-              <Route path="/Login" element={<Login onLogin={setIsAuthenticated}/>} />
-              <Route path="/Dashboard" element={<Dashboard />} />
-              <Route path="/StoredSets" element={<StoredSets />} />
-              <Route path="/addSets" element={<AddSets />} />
+              <Route path="/Login" element={<Login handleIsLoading={handleIsLoading} onLogin={setIsAuthenticated}/>} />
+              <Route path="/Dashboard" element={<Dashboard handleIsLoading={handleIsLoading} />} />
+              <Route path="/StoredSets" element={<StoredSets handleIsLoading={handleIsLoading} />} />
+              <Route path="/addSets" element={<AddSets handleIsLoading={handleIsLoading} />} />
             </Routes>
               
           </Router>
+
       </div>
     </>
   );

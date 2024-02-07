@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { useState } from 'react';
 import Switch from 'react-switch';
 
-const AddSets = () => {
+function AddSets ({handleIsLoading}){
     const [set, setSet] = useState([])
     const [setCode, setSetCode] = useState('')
     const [isAutoFilled, setIsAutoFilled] = useState(false)
@@ -27,9 +27,11 @@ const AddSets = () => {
         };
         
         try {
+            handleIsLoading(true)
             const response = await axios.request(config);
             setSet(response.data.additionalData);
             setIsAutoFilled(true);
+            handleIsLoading(false)
         } catch (error) {
             console.log(error);
         }
