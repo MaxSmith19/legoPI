@@ -26,3 +26,5 @@ server/logs/
 web/__pycache__/
 web/scrape.py
 web/__pycache__/scrape.cpython-311.pyc
+chromedriver.exe
+geckodriver.log
