@@ -8,16 +8,13 @@ const AddSets = () => {
     const [set, setSet] = useState([])
     const [setCode, setSetCode] = useState('')
     const [isAutoFilled, setIsAutoFilled] = useState(false)
-    const [wanted, setWanted] = useState(true);
+    const [wanted, setWanted] = useState(false);
 
     useEffect(() => {
         setIsAutoFilled(false)
         console.log(isAutoFilled)
     },[])
     
-    useEffect(() => {
-        console.log(wanted)
-    },[wanted])
 
     const autoFillSet = async () => {
         let config = {
@@ -37,8 +34,9 @@ const AddSets = () => {
             console.log(error);
         }
     };
+    
     const confirmSet = async () => {
-        wanted ? set.wanted=true : set.wanted=false
+        let data = {"setCode": setCode, "additionalData": set, "wanted": wanted}
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -47,21 +45,20 @@ const AddSets = () => {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Bearer ' + Cookies.get('token')
             },
-            data : {"setCode": setCode, "additionalData": set}
+            data : data
         };
         
         try {
             const response = await axios.request(config);
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
     }
     return (
-        <div className={wanted ? "text-center bg-blue-300 pt-8 px-20 w-full transition-all delay-75" : "text-center bg-red-300 pt-8 px-20 w-full transition-all delay-75"}>
+        <div className={wanted ? "text-center bg-red-300 pt-8 px-20 w-full transition-all delay-75" : "text-center bg-blue-300 pt-8 px-20 w-full transition-all delay-75"}>
             <div className="text-center">
-                <h1 className="text-5xl">Add a{wanted ? "n owned" : " wanted"} set</h1>
-                <div className="flex flex-row"><h2 className="mr-3"><strong>Wishlist?</strong></h2><Switch onChange={()=>setWanted(!wanted)} checked={!wanted}/></div>
+                <h1 className="text-5xl">Add a{wanted ? " wanted" : "n owned"} set</h1>
+                <div className="flex flex-row"><h2 className="mr-3"><strong>Wishlist?</strong></h2><Switch onChange={()=>setWanted(!wanted)} checked={wanted}/></div>
                 <div className="flex flex-wrap mt-8 flex-row mb-10">
                     <input className="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="setCode" type="text" placeholder="Set Code for your lego set" onChange={(e)=>setSetCode(e.target.value)}/>
                     <button className={isAutoFilled? "hidden":"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"} onClick={()=>autoFillSet()}>AutoFill</button>
