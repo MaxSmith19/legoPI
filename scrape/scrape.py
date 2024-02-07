@@ -5,9 +5,16 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+
 #consider proxies to call LEGO, got locked out for a while due to too many requests.
 
 #todo - pandas?
+
+cService = ChromeService(ChromeDriverManager().install())
 def checkSetPrice(setCode):
     driver = webdriver.Chrome()
     driver.get("https://www.bricklink.com/v2/catalog/catalogitem.page?S=" + setCode + "#T=P")
@@ -53,8 +60,8 @@ def getLegoData(setCode):
 
     for i in range(len(metaTitles)):
         data.update({metaTitles[i].get_text(): metaValues[i].get_text()})
-
-    driver = webdriver.Chrome()
+    #"C:\Users\black\Documents\Dev Projects\chrome-win64"
+    driver=webdriver.Chrome(ChromeDriverManager().install())
     driver.get("https://brickset.com/sets/" + setCode)
     driver.implicitly_wait(5) # test this - could be quicker.
     try:
