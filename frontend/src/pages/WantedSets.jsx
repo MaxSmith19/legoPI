@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { useState } from 'react';
 import LegoSetCard from '../components/LegoSetCard';
 
-const StoredSets = () => {
+const WantedSets = () => {
     const [sets, setSets] = useState([])
     useEffect(() => {
         getSets()
@@ -32,7 +32,7 @@ const StoredSets = () => {
             let items = response.data
             for(let i =0;i<response.data.length;i++){
                 console.log(response.data[i]["wishList"])
-                if(response.data[i]["wishList"]==false){
+                if(response.data[i]["wishList"]==true){
                     updatedSet.push(response.data[i])
                 }
             }
@@ -47,7 +47,7 @@ const StoredSets = () => {
     return (
         <div  className="pt-8 px-20 w-full">
             <div className="text-center">
-                <h1 className="text-5xl  border-gray-300 ">Stored sets</h1>
+                <h1 className="text-5xl  border-gray-300 ">Wanted sets</h1>
                 <div className="bg-gray-300 flex flex-row-reverse m-5 rounded mt-0 ml-0 w-full ">
                 <button className="bg-red-500 border-white rounded-lg text-white m-3 pl-8 pr-8" onClick={()=>refreshSets()}>Refresh</button>
                 </div>
@@ -66,4 +66,4 @@ const StoredSets = () => {
     )
 }
 
-export default StoredSets
+export default WantedSets

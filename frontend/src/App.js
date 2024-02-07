@@ -4,13 +4,14 @@ import Dashboard from './pages/Dashboard'
 import { Navigate } from 'react-router-dom';
 import StoredSets from './pages/StoredSets';
 import AddSets from './pages/AddSets';
+import WantedSets from './pages/WantedSets'
 import Navigation from './components/Navigation';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { BarLoader } from 'react-spinners';
 
-function App(props) {
+function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const unpackCookie = () => {
@@ -53,6 +54,7 @@ function App(props) {
               <Route path="/Login" element={<Login handleIsLoading={handleIsLoading} onLogin={setIsAuthenticated}/>} />
               <Route path="/Dashboard" element={<Dashboard handleIsLoading={handleIsLoading} />} />
               <Route path="/StoredSets" element={<StoredSets handleIsLoading={handleIsLoading} />} />
+              <Route path="/WantedSets" element={<WantedSets handleIsLoading={handleIsLoading} />} />
               <Route path="/addSets" element={<AddSets handleIsLoading={handleIsLoading} />} />
             </Routes>
               
