@@ -13,6 +13,10 @@ const legoSetSchema = new mongoose.Schema({
   userID: {
     type: String,
     required: true
+  },
+  wishList: {
+    type: Boolean,
+    required: false
   }
 });
 

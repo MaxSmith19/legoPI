@@ -50,7 +50,8 @@ const postNewSet = async (req, res) => {
         const storage = new Storage({
             setCode: req.body.setCode,
             userID: token.id,
-            additionalData: req.body.additionalData
+            additionalData: req.body.additionalData,
+            wishList: req.body.wanted || false
         });
         const newStorage = await storage.save();
         res.status(201).json(newStorage);
